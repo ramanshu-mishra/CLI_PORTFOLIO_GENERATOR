@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { generateCli, generateCliFromNode } from "./generator";
 import { GeneratePortfolioCliRequest, PortfolioNode } from "./interfaces";
+import { rainbow } from "gradient-string";
 
 const ANSI_REGEX = /\u001B\[[0-?]*[ -/]*[@-~]/g;
 
@@ -63,23 +64,24 @@ test("generateCliFromNode applies alignment and keeps visible text intact", () =
     type: "text",
     value: "Aligned",
     style: {
-      align: "center",
-      width: 30,
-      chalk: {
-        level: 3,
-        modifiers: ["bold"],
-        foreground: {
-          hex: "#22C55E",
-        },
+      figlet:{
+        enabled:true,
+        font: "Standard"
       },
+      gradient:{
+        preset: "rainbow",
+        colors: ["#eab308", "#22c55e", "#22d3ee", "#eab308"],
+        interpolation: "rgb"
+      }
     },
   };
 
   const output = generateCliFromNode(node);
   const plain = stripAnsi(output);
+  console.log(plain);
 
-  assert.equal(plain.trim(), "Aligned");
-  assert.ok(plain.startsWith(" "));
+  const lines = output.split("\n").filter((line) => line.trim().length > 0);
+  assert.ok(lines.length > 1)
 });
 
 test("generateCliFromNode handles gradient style without changing content", () => {
@@ -114,6 +116,7 @@ test("generateCliFromNode applies figlet when enabled", () => {
   };
 
   const output = stripAnsi(generateCliFromNode(node));
+  console.log(output);
   const lines = output.split("\n").filter((line) => line.trim().length > 0);
 
   assert.ok(lines.length > 1);

@@ -120,7 +120,7 @@ export type FigletKerningMethod =
   | "universal smushing";
 
 export interface FigletStyleOptions {
-  enabled?: boolean;
+  enabled?: boolean ;
   font?: string;
   horizontalLayout?: FigletKerningMethod;
   verticalLayout?: FigletKerningMethod;
@@ -173,6 +173,10 @@ export interface PortfolioSectionRequest {
   id: string;
   title: string;
   content: PortfolioNode[];
+  sectionSeperator?: {
+    type?: SeperatorEnum,
+    chalk?: ChalkStyleOptions
+  }
 }
 
 export interface PortfolioThemeRequest {
@@ -189,4 +193,13 @@ export interface GeneratePortfolioCliRequest {
   portfolioName: string;
   theme?: PortfolioThemeRequest;
   sections: PortfolioSectionRequest[];
+  
 }
+
+export enum SeperatorEnum{
+  line = "_",
+  dashed = "-",
+  dotted = "."
+}
+
+

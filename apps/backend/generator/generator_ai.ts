@@ -185,6 +185,7 @@ function applyGradient(text: string, style?: TextStyleOptions): string {
 
 	if (gradientStyle.preset) {
 		const preset = GRADIENT_PRESETS[gradientStyle.preset];
+    console.log(preset.multiline(text));
 		return gradientStyle.multiline ? preset.multiline(text) : preset(text);
 	}
 
